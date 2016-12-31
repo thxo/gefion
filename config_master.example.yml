@@ -1,0 +1,9 @@
+database:
+  path: /tmp/db.sqlite3
+queue:  # ZeroMQ is being used.
+  bind: tcp://*:23333
+workers:  # Define them here, and use the same key in workers' configs.
+  - internal01:
+    key: CorrectStapleBatteryHorse
+  - america02:
+    key: admin123

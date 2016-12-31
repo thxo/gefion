@@ -1,0 +1,4 @@
+my_name: internal01
+master:  # ZeroMQ queue.
+  uri: tcp://overmind.example:23333
+  key: CorrectStapleBatteryHorse  # Pre-shared key defined in master.
