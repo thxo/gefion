@@ -68,5 +68,5 @@ class TelegramNotifier(Notifier):
             logging.error('Caught Telegram error: %s', str(err))
             return False
 
-        logging.info('Sent message to chat %d.', self.destination)
+        logging.info('Sent message to chat %s.', self.destination)
         return True
