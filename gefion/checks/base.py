@@ -25,6 +25,14 @@ class Result(object):
         self.message = message
         self.timestamp = timestamp
 
+    @property
+    def api_serialised(self):
+        """Return serialisable data for API monitor assignments."""
+        return {'availability': self.availability,
+                'runtime': self.runtime,
+                'message': self.message,
+                'timestamp': self.timestamp}
+
 
 class Check(object):
     """Performs checks for availability of resources.

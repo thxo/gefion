@@ -20,13 +20,12 @@ class Monitor(Base):
         id (Column(Integer)): Auto-incremental ID.
         name (Column(String)): User-friendly identifying name.
         unique_id (Column(String)): UUID, updated when arguments are.
-        checker (Column(String)): Type of check. Use file names under checks
+        check (Column(String)): Type of check. Use file names under checks
             folder.
         arguments (Column(String)): JSON-ed dict, information passed onto
             Notifiers.
         worker (Column(String)): Name of the worker assigned in config.
         frequency (Column(Integer)): In minutes.
-        max_retries (Column(Integer)): In minutes.
         last_availability (Column(Boolean)): Latest availability.
         last_message (Column(String)): Latest message.
         last_updated (Column((DateTime)): Last time check was run.
@@ -37,17 +36,27 @@ class Monitor(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     unique_id = Column(String)
-    checker = Column(String)  # ex. `port`.
+    check = Column(String)  # ex. `port`.
     arguments = Column(String)
     worker = Column(String)
     frequency = Column(Integer)
-    max_retries = Column(Integer)
     last_availability = Column(Boolean)
     last_message = Column(String)
     last_updated = Column(DateTime, default=func.now())
     contacts = relationship('Contact',
                             secondary=contact_association,
                             backref='monitors')
+
+    @property
+    def api_serialised(self):
+        """Return serialisable data for API monitor assignments."""
+        return {'id': self.id,
+                'name': self.name,
+                'unique_id': self.unique_id,
+                'check': self.check,
+                'arguments': self.arguments,
+                'worker': self.worker,
+                'frequency': self.frequency}
 
 
 class Contact(Base):

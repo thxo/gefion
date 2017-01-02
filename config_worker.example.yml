@@ -1,4 +1,7 @@
 my_name: internal01
-master:  # ZeroMQ queue.
-  uri: tcp://overmind.example:23333
+master:
+  endpoint: http://127.0.0.1:5000
   key: CorrectStapleBatteryHorse  # Pre-shared key defined in master.
+rq:
+  host: localhost
+  port: 6379

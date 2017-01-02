@@ -56,7 +56,7 @@ class TelegramNotifier(Notifier):
 
     def send(self):
         """Initialise Telegram bot and send message with Bot API."""
-        logging.debug('Sending message to chat %d.', self.destination)
+        logging.debug('Sending message to chat %s.', self.destination)
         try:
             logging.debug('Initialising bot with token %s.', self.token)
             bot = Bot(self.token)
