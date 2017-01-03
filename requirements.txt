@@ -1,9 +1,0 @@
-python-telegram-bot
-PyYAML
-flask
-rq
-rq-scheduler
-flask-sqlalchemy
-Flask-HTTPAuth
-requests
-retrying

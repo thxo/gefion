@@ -1,8 +1,8 @@
-sudo: false
 language: python
-python:
-  - "3.3"
-  - "3.4"
-  - "3.5"
-install: pip install tox-travis
-script: tox
+python: 3.5
+env:
+  - TOXENV=py35
+  - TOXENV=py34
+  - TOXENV=py33
+install: pip install -U tox
+script: tox -e ${TOXENV}
