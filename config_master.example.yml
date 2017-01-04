@@ -10,3 +10,9 @@ workers:  # Define them here, and use the same key in workers' configs.
     key: admin123
 telegram:
   token: 0:invalidtoken
+postmark:
+  server_token: put-your-token-here
+  from_address: verified@sender.signature.example
+  template_id: 1200342
+  up_text: Up
+  down_text: Down

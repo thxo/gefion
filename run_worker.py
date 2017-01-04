@@ -29,6 +29,5 @@ redis_host = config.get('rq', dict()).get('host', 'localhost')
 redis_port = int(config.get('rq', dict()).get('port', 6379))
 scheduler = Scheduler(connection=Redis(host=redis_host, port=redis_port))
 
-
 if __name__ == '__main__':
     fetch_monitors(scheduler, config)

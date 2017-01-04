@@ -11,4 +11,5 @@ from gefion import checks, notifiers
 
 CHECKS = {'port': checks.PortCheck}
 
-NOTIFIERS = {'telegram': notifiers.TelegramNotifier}
+NOTIFIERS = {'telegram': notifiers.TelegramNotifier,
+             'postmark': notifiers.PostmarkNotifier}

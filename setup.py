@@ -10,8 +10,9 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'Flask', 'Flask-HTTPAuth', 'Flask-SQLAlchemy', 'python-telegram-bot',
-    'PyYAML', 'requests', 'retrying', 'rq', 'rq-scheduler'
+    'Flask', 'Flask-HTTPAuth', 'Flask-SQLAlchemy', 'postmarker',
+    'python-telegram-bot', 'PyYAML', 'requests', 'retrying', 'rq',
+    'rq-scheduler'
 ]
 
 test_requirements = [
