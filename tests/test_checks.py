@@ -7,6 +7,23 @@ import unittest
 from gefion import checks
 
 
+class TestCheck(unittest.TestCase):
+    """Test Check base class.."""
+
+    def setUp(self):
+        """Setup PortCheck tests."""
+        pass
+
+    def tearDown(self):
+        """Tear down PortCheck tests."""
+        pass
+
+    def test_check_not_implemented(self):
+        """Ensure base class throws NotImplementedError."""
+        base_check = checks.Check()
+        self.assertRaises(NotImplementedError, base_check.check)
+
+
 class TestPortCheck(unittest.TestCase):
     """Test PortCheck."""
 
@@ -38,7 +55,7 @@ class TestPortCheck(unittest.TestCase):
         hostname_check = checks.PortCheck('www.msftncsi.com', 80)
         self.assertTrue(hostname_check.check().availability)
 
-        port_not_open_check = checks.PortCheck('8.8.8.8', 65535)
+        port_not_open_check = checks.PortCheck('8.8.8.8', 65535, timeout=2)
         self.assertFalse(port_not_open_check.check().availability)
 
         invalid_hostname_check = checks.PortCheck('fancy.but.invalid', 80)
@@ -74,3 +91,13 @@ class TestResult(unittest.TestCase):
         default_result = checks.Result(False, 1.03e-05, 'Something happened.')
         self.assertTrue(
             default_result.timestamp - time.time() < 1)  # Assume current time.
+
+    def test_api_serialise(self):
+        """Test the api_serialised property."""
+        result = checks.Result(False, 1.03e-05, 'Something happened.',
+                               1480000000)
+        expected_dict = {'availability': False,
+                         'runtime': 1.03e-05,
+                         'message': 'Something happened.',
+                         'timestamp': 1480000000}
+        self.assertEqual(result.api_serialised, expected_dict)
