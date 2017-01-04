@@ -30,8 +30,8 @@ class TelegramNotifier(Notifier):
 
         Arguments:
             message (gefion.notifiers.message): Message object for delivery.
-            destination (str): Destination of the message.
-            token (str):
+            destination (str): Telegram chat ID.
+            token (str): Telegram bot token from BotFather.
             up_template (str): Up message templates. Variables `host`, `time.`
             down_template (str): Down message templates. Variables `host`,
                 `time` and `message.`
@@ -55,7 +55,11 @@ class TelegramNotifier(Notifier):
         super().__init__(message, destination)
 
     def send(self):
-        """Initialise Telegram bot and send message with Bot API."""
+        """Initialise Telegram bot and send message with Bot API.
+
+        Returns:
+            bool: Successfulness of delivery.
+        """
         logging.debug('Sending message to chat %s.', self.destination)
         try:
             logging.debug('Initialising bot with token %s.', self.token)
