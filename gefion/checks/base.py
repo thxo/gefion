@@ -27,7 +27,7 @@ class Result(object):
 
     @property
     def api_serialised(self):
-        """Return serialisable data for API monitor assignments."""
+        """Return serialisable data for API result submissions."""
         return {'availability': self.availability,
                 'runtime': self.runtime,
                 'message': self.message,
@@ -45,7 +45,7 @@ class Check(object):
         pass
 
     def check(self):
-        """Check if specified resource is availability.
+        """Check if specified resource is availabile.
 
         Called without arguments.
 
