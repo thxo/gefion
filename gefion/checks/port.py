@@ -31,7 +31,11 @@ class PortCheck(Check):
         super().__init__(**kwargs)
 
     def check(self):
-        """Check if port is open."""
+        """Check if port is open.
+
+        Returns:
+            gefion.checkers.Result
+        """
         sock = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
         sock.settimeout(self.timeout)
         try:
