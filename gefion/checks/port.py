@@ -14,7 +14,7 @@ logger.setLevel(logging.DEBUG)
 class PortCheck(Check):
     """Checks if TCP ports are open."""
 
-    def __init__(self, host, port, timeout=5, **kwargs):
+    def __init__(self, host, port, timeout=7, **kwargs):
         """Initialise PortCheck.
 
         Arguments:
