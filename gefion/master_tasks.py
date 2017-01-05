@@ -21,7 +21,7 @@ def notify(notifier_name, hostname, result, destination, config):
     """Notify using Notifiers.
 
     Arguments:
-        notifier_name (str): Alias of Notifier. See name_maps.
+        notifier_name (str): Name of Notifier. See name_maps.
         hostname (str): Name of resource being checked.
         result (gefion.checks.Result): Result of the check.
         destination (str): Message recipient.
@@ -47,8 +47,9 @@ def process_result(monitor, result_dict, config):
     """Process monitoring result received from worker.
 
     Arguments:
-        monitor (gefion.models.Monitor): Instance of db model Monitor.
-        result_dict (dict): Dictionary of results depicting Result class.
+        monitor (gefion.models.Monitor): Instance of database model Monitor.
+        result_dict (dict): Dictionary of results depicting Result class,
+            submitted by workers.
         config (dict): Entire loaded configuration file.
     """
     hostname = monitor.name

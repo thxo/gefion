@@ -34,7 +34,7 @@ class PortCheck(Check):
         """Check if port is open.
 
         Returns:
-            gefion.checkers.Result
+            gefion.checks.Result
         """
         sock = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
         sock.settimeout(self.timeout)

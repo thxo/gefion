@@ -20,6 +20,9 @@ def result_is_false(result):
     """
     Determine if the availability of a Result is False.
 
+    This is used by the retry decorator to determine if a check should be
+        re-ran.
+
     Arguments:
         result (gefion.checks.Result): Instance with availability to check.
 
@@ -41,8 +44,8 @@ def run_check(check_name, arguments):
     Execute check task.
 
     Arguments:
-        check_name (str): Type of the check, name found in name_maps.
-        arguments (dict): Argument of the check.
+        check_name (str): Type of the check. Use names in name_maps.
+        arguments (dict): Arguments of the check.
 
     Returns:
         gefion.checks.Result
@@ -59,7 +62,7 @@ def run_monitor(monitor_id, unique_id, check_name, arguments, endpoint_url):
     Arguments:
         monitor_id (str): Database ID of the Monitor.
         unique_id (str): UUID of the version.
-        check_name (str): Type of the check, name found in name_maps.
+        check_name (str): Type of the check. Use names found in name_maps.
         arguments (dict): Argument of the check.
         endpoint_url (str): Endpoint URL of master.
 
@@ -87,7 +90,7 @@ def fetch_monitors(scheduler, config):
     """Fetch Monitors and schedule accordingly.
 
     Arguments:
-        scheduler (rq_scheduler.Scheduler): The Schedule instance initialized.
+        scheduler (rq_scheduler.Scheduler): The Scheduler instance initialized.
         config (dict): Entire loaded config.
     """
     monitors_url = urljoin(config['master'].get('endpoint'), 'monitors')
@@ -100,7 +103,6 @@ def fetch_monitors(scheduler, config):
     for job in scheduler.get_jobs():  # Delete all existing jobs.
         scheduler.cancel(job)
 
-    # scheduler.enqueue_in(timedelta(minutes=10), fetch_monitors, scheduler)
     for monitor in monitors:
         scheduler.schedule(
             scheduled_time=datetime.utcnow(),

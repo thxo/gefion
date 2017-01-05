@@ -19,12 +19,12 @@ class Monitor(Base):
     Attributes:
         id (Column(Integer)): Auto-incremental ID.
         name (Column(String)): User-friendly identifying name.
-        unique_id (Column(String)): UUID, updated when arguments are.
-        check (Column(String)): Type of check. Use file names under checks
-            folder.
+        unique_id (Column(String)): Version UUID, updated when arguments are.
+        check (Column(String)): Type of check. Use names in name_maps.
         arguments (Column(String)): JSON-ed dict, information passed onto
             Notifiers.
-        worker (Column(String)): Name of the worker assigned in config.
+        worker (Column(String)): Name of the worker. Use names assigned in the
+            config file.
         frequency (Column(Integer)): In minutes.
         last_availability (Column(Boolean)): Latest availability.
         last_message (Column(String)): Latest message.
@@ -65,9 +65,9 @@ class Contact(Base):
     Attributes:
         id (Column(Integer)): Auto-incremental ID.
         name (Column(String)): User-friendly identifying name.
-        notifier (Column(String)): Type of notifier. Use file names under
-            `notifiers` folder.
-        destination (Column(String)): Destination of message, ex. phone#s.
+        notifier (Column(String)): Type of notifier. Use names in name_maps.
+        destination (Column(String)): Destination of message, ex. phone numbers
+            or chat IDs.
     """
 
     __tablename__ = 'contacts'

@@ -45,11 +45,11 @@ class Check(object):
         pass
 
     def check(self):
-        """Check if specified resource is availabile.
+        """Check if specified resource is available.
 
         Called without arguments.
 
         Returns:
-            gefion.checkers.Result
+            gefion.checks.Result
         """
         raise NotImplementedError
