@@ -57,7 +57,7 @@ def assert_response(response,
 
     if response.headers and headers_contain:
         for key, expected_value in headers_contain.items():
-            response_header_key = response.headers.get(key)
+            response_header_key = response.headers.get(key, str())
             if expected_value not in response_header_key:
                 raise ContainResponseError('Header {}, {} not in {}.'.format(
                     key, expected_value, response_header_key))
