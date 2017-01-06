@@ -28,7 +28,7 @@ def make_template_model(message, up_text='UP', down_text='DOWN'):
     if message.result.availability:
         availability = up_text
     else:
-        message.availability = down_text
+        availability = down_text
     time_string = datetime.utcfromtimestamp(message.result.timestamp).strftime(
         '%Y-%m-%dT%H:%M:%SZ')
     return {'name': name,
