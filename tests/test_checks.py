@@ -4,6 +4,8 @@
 import time
 import unittest
 
+import requests
+
 from gefion import checks
 
 
@@ -22,6 +24,81 @@ class TestCheck(unittest.TestCase):
         """Ensure base class throws NotImplementedError."""
         base_check = checks.Check()
         self.assertRaises(NotImplementedError, base_check.check)
+
+
+class TestHTTPCheck(unittest.TestCase):
+    """Test HTTPCheck."""
+
+    def setUp(self):
+        """Setup HTTPCheck tests."""
+        pass
+
+    def tearDown(self):
+        """Tear down HTTPCheck tests."""
+        pass
+
+    def test_init(self):
+        """Test the initialisation of the HTTPCheck class."""
+        init_check = checks.HTTPCheck('https://www.example.com/', 'POST',
+                                      {'post-some': 'data'},
+                                      {'x-custom-header': 'header'}, 204,
+                                      'iana', {'Accept-Ranges': 'bytes'})
+        self.assertEqual(init_check.url, 'https://www.example.com/')
+        self.assertEqual(init_check.requests_method, requests.post)
+        self.assertEqual(init_check.data, {'post-some': 'data'})
+        self.assertEqual(init_check.req_headers, {'x-custom-header': 'header'})
+        self.assertEqual(init_check.status_code, 204)
+        self.assertEqual(init_check.text_contain, 'iana')
+        self.assertEqual(init_check.headers_contain,
+                         {'Accept-Ranges': 'bytes'})
+
+    def test_assert_response(self):
+        """Test the assert_response() method."""
+        class FakeResponse(object):
+            """Duck-types requests.Response."""
+
+            status_code = 404
+            headers = {'Accept-Ranges': 'bytes'}
+            text = 'ok'
+
+        self.assertIsNone(checks.http.assert_response(FakeResponse))
+        self.assertIsNone(checks.http.assert_response(
+            FakeResponse, 404, 'ok', {'Accept-Ranges': 'bytes'}))
+        self.assertRaises(checks.http.StatusCodeResponseError,
+                          checks.http.assert_response, FakeResponse, 200)
+        self.assertRaises(checks.http.ContainResponseError,
+                          checks.http.assert_response, FakeResponse, 404,
+                          'fail')
+        self.assertRaises(checks.http.ContainResponseError,
+                          checks.http.assert_response,
+                          FakeResponse,
+                          404,
+                          'ok',
+                          headers_contain={'Accept-Ranges': 'none'})
+        self.assertRaises(checks.http.ContainResponseError,
+                          checks.http.assert_response,
+                          FakeResponse,
+                          404,
+                          'ok',
+                          headers_contain={'Accept-Ranges': 'bytes',
+                                           'X-Extra-Header':
+                                           'not-present'})
+
+    def test_internet(self):
+        """Test with Internet resources."""
+        http_204_check = checks.HTTPCheck('http://httpbin.org/status/204',
+                                          'GET',
+                                          status_code=204)
+        self.assertTrue(http_204_check.check().availability)
+
+        http_204_fail_check = checks.HTTPCheck('http://httpbin.org/status/204',
+                                               'GET',
+                                               status_code=200)
+        self.assertEqual(http_204_fail_check.check().message,
+                         'Status code 204, expected 200.')
+
+        bad_url_check = checks.HTTPCheck('http://invalidhost', 'GET')
+        self.assertIn('Errno -2', bad_url_check.check().message)
 
 
 class TestPortCheck(unittest.TestCase):
