@@ -16,3 +16,6 @@ postmark:
   template_id: 1200342
   up_text: Up
   down_text: Down
+cachet:
+  api_endpoint: http://127.0.0.1/api/
+  api_token: t896DlatyWtst4LgKdlo

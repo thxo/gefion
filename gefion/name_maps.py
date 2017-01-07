@@ -11,5 +11,6 @@ from gefion import checks, notifiers
 
 CHECKS = {'http': checks.HTTPCheck, 'port': checks.PortCheck}
 
-NOTIFIERS = {'telegram': notifiers.TelegramNotifier,
+NOTIFIERS = {'cachet': notifiers.CachetNotifier,
+             'telegram': notifiers.TelegramNotifier,
              'postmark': notifiers.PostmarkNotifier}

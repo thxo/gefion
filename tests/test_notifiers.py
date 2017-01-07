@@ -7,6 +7,46 @@ from gefion import notifiers
 from gefion.checks import Result
 
 
+class TestCachetNotifier(unittest.TestCase):
+    """Test CachetNotifier."""
+
+    def setUp(self):
+        """Setup CachetNotifier tests."""
+        pass
+
+    def tearDown(self):
+        """Tear down CachetNotifier tests."""
+
+    def test_make_component_url(self):
+        """Test the make_component_url() method."""
+        self.assertEqual(
+            notifiers.cachet.make_component_url(
+                'https://www.example.com/api/',
+                42),
+            'https://www.example.com/api/v1/components/42')
+        self.assertEqual(
+            notifiers.cachet.make_component_url(
+                'https://www.example.com/api',
+                42),
+            'https://www.example.com/api/v1/components/42')
+
+    def test_init(self):
+        """Test the initialisation of the CachetNotifier class."""
+        test_message = notifiers.Message('Test Machine', Result(False, 1, '',
+                                                                1480000000))
+        init_notifier = notifiers.CachetNotifier(
+            test_message,
+            42,
+            api_endpoint='https://www.example.com/api/',
+            api_token='secrettoken')
+        self.assertEqual(init_notifier.component_url,
+                         'https://www.example.com/api/v1/components/42')
+        self.assertEqual(init_notifier.request_data, {'status': 4})
+        self.assertEqual(init_notifier.request_headers, {
+            'X-Cachet-Token': 'secrettoken'
+        })
+
+
 class TestTelegramNotifier(unittest.TestCase):
     """Test TelegramNotifier."""
 
