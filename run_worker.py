@@ -10,7 +10,6 @@ from rq_scheduler import Scheduler
 
 from gefion.worker_tasks import fetch_monitors
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -22,7 +21,7 @@ parser.add_argument('-c',
                     required=True)
 config_file = open(parser.parse_args().config.strip())
 config = yaml.safe_load(config_file)
-logging.debug('Master configuration loaded: %s.', config)
+logger.debug('Master configuration loaded: %s.', config)
 config_file.close()
 
 redis_host = config.get('rq', dict()).get('host', 'localhost')

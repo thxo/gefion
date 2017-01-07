@@ -11,7 +11,6 @@ from retrying import RetryError, retry
 
 from gefion import name_maps
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -94,10 +93,10 @@ def fetch_monitors(scheduler, config):
         config (dict): Entire loaded config.
     """
     monitors_url = urljoin(config['master'].get('endpoint'), 'monitors')
-    logging.info('Requesting endpoint for monitors at %s.', monitors_url)
+    logger.info('Requesting endpoint for monitors at %s.', monitors_url)
     r = requests.get(monitors_url,
                      auth=(config.get('my_name'), config['master'].get('key')))
-    logging.debug('Master returned following Monitors: %s.', r.text)
+    logger.debug('Master returned following Monitors: %s.', r.text)
     monitors = json.loads(r.text).get('monitors')
 
     for job in scheduler.get_jobs():  # Delete all existing jobs.

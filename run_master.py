@@ -16,7 +16,6 @@ from sqlalchemy import or_
 from gefion.master_tasks import process_result
 from gefion.models import Base, Monitor
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -28,7 +27,7 @@ parser.add_argument('-c',
                     required=True)
 config_file = open(parser.parse_args().config.strip())
 config = yaml.safe_load(config_file)
-logging.debug('Master configuration loaded: %s.', config)
+logger.debug('Master configuration loaded: %s.', config)
 config_file.close()
 
 app = Flask(__name__)

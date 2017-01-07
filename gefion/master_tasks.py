@@ -12,7 +12,6 @@ from gefion.checks import Result
 from gefion.models import Base
 from gefion.notifiers import Message
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -30,10 +29,10 @@ def notify(notifier_name, hostname, result, destination, config):
     Returns:
         bool: Successfulness of notification.
     """
-    logging.debug('Notifying %s with method %s to %s.', hostname,
-                  notifier_name, destination)
+    logger.debug('Notifying %s with method %s to %s.', hostname,
+                 notifier_name, destination)
     notifier_config = config.get(notifier_name, dict())
-    logging.debug('Got notifier config %s.', notifier_config)
+    logger.debug('Got notifier config %s.', notifier_config)
     if notifier_name not in name_maps.NOTIFIERS:
         return False
     message = Message(hostname, result)
@@ -65,9 +64,9 @@ def process_result(monitor, result_dict, config):
     session = session_factory()
     monitor = session.merge(monitor)
 
-    logging.debug('%s last result was %s.', hostname,
-                  monitor.last_availability)
-    logging.info('%s latest result is %s.', hostname, result.availability)
+    logger.debug('%s last result was %s.', hostname,
+                 monitor.last_availability)
+    logger.info('%s latest result is %s.', hostname, result.availability)
     if monitor.last_availability != result.availability:
         for contact in monitor.contacts:
             notify(contact.notifier, hostname, result, contact.destination,

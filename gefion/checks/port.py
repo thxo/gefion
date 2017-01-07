@@ -22,8 +22,8 @@ class PortCheck(Check):
             port (int): Port number.
             timeout (int): Connection timeout in seconds.
         """
-        logging.debug('Initialising with %s:%d, timeout %ds.', host, port,
-                      timeout)
+        logger.debug('Initialising with %s:%d, timeout %ds.', host, port,
+                     timeout)
         self.host = host
         self.port = port
         self.timeout = timeout
@@ -53,6 +53,6 @@ class PortCheck(Check):
         availability = False if error else True
         runtime = end_time - start_time
         message = str(error) if error else ''
-        logging.info('Tested %s in %fs w/ message "%s".', availability,
-                     runtime, message)
+        logger.info('Tested %s in %fs w/ message "%s".', availability,
+                    runtime, message)
         return Result(availability, runtime, message)

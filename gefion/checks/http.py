@@ -127,6 +127,6 @@ class HTTPCheck(Check):
 
         availability = False if error else True
         message = str(error) if error else ''
-        logging.info('Tested %s in %fs w/ message "%s".', availability,
-                     runtime, message)
+        logger.info('Tested %s in %fs w/ message "%s".', availability,
+                    runtime, message)
         return Result(availability, runtime, message)

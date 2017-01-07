@@ -65,7 +65,7 @@ class PostmarkNotifier(Notifier):
         up_text = kwargs.get('up_text', 'UP')
         down_text = kwargs.get('down_text', 'DOWN')
         self.template_model = make_template_model(message, up_text, down_text)
-        logging.debug('Got model: %s.', self.template_model)
+        logger.debug('Got model: %s.', self.template_model)
 
         super().__init__(message, destination)
 
@@ -84,4 +84,5 @@ class PostmarkNotifier(Notifier):
                 To=self.destination)
         except PostmarkerException:
             return False
+        logger.info('Sent message to email %s.', self.destination)
         return True

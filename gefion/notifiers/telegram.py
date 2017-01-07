@@ -50,7 +50,7 @@ class TelegramNotifier(Notifier):
         self.text = template.format(host=message.hostname,
                                     time=time_formatted,
                                     message=message.result.message)
-        logging.debug('Message is "%s".', self.text)
+        logger.debug('Message is "%s".', self.text)
 
         super().__init__(message, destination)
 
@@ -60,17 +60,17 @@ class TelegramNotifier(Notifier):
         Returns:
             bool: Successfulness of delivery.
         """
-        logging.debug('Sending message to chat %s.', self.destination)
+        logger.debug('Sending message to chat %s.', self.destination)
         try:
-            logging.debug('Initialising bot with token %s.', self.token)
+            logger.debug('Initialising bot with token %s.', self.token)
             bot = Bot(self.token)
             bot.sendMessage(chat_id=int(self.destination),
                             text=self.text,
                             parse_mode=ParseMode.MARKDOWN)
 
         except TelegramError as err:
-            logging.error('Caught Telegram error: %s', str(err))
+            logger.error('Caught Telegram error: %s', str(err))
             return False
 
-        logging.info('Sent message to chat %s.', self.destination)
+        logger.info('Sent message to chat %s.', self.destination)
         return True
