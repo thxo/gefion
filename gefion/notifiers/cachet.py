@@ -22,7 +22,7 @@ def make_component_url(api_endpoint, component_id):
     Returns:
         str: API URL of the component.
     """
-    if api_endpoint != '/':  # Otherwise urljoin strips last component.
+    if api_endpoint[-1] != '/':  # Otherwise urljoin strips last component.
         api_endpoint += '/'
     component_base = urljoin(api_endpoint, 'v1/components/')
     return urljoin(component_base, str(component_id))
