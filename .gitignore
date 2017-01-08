@@ -58,6 +58,9 @@ target/
 # pyenv python configuration file
 .python-version
 
+# Editors
+.vscode/
+
 # Config file
 config.yml
 config_master.yml
