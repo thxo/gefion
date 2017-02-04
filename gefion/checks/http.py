@@ -113,7 +113,8 @@ class HTTPCheck(Check):
             response = self.requests_method(url=self.url,
                                             data=self.data,
                                             headers=self.req_headers,
-                                            allow_redirects=False)
+                                            allow_redirects=False,
+                                            timeout=15)
             runtime = response.elapsed.total_seconds()
             assert_response(response, self.status_code, self.text_contain,
                             self.headers_contain)
