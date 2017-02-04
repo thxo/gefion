@@ -27,7 +27,6 @@ def make_component_url(api_endpoint, component_id):
     component_base = urljoin(api_endpoint, 'v1/components/')
     return urljoin(component_base, str(component_id))
 
-
 class CachetNotifier(Notifier):
     """Updates Cachet components to up/down.
 
@@ -70,7 +69,8 @@ class CachetNotifier(Notifier):
         try:
             r = requests.put(self.component_url,
                              data=self.request_data,
-                             headers=self.request_headers)
+                             headers=self.request_headers,
+                             timeout=15)
         except requests.exceptions.RequestException as err:
             logging.error('Caught requests exception: %s.', str(err))
             return False
